@@ -117,3 +117,8 @@ pip-wheel-metadata
 
 # Textual
 snapshot_report.html
+
+# Workflows temp files
+**/work/*
+**/.nextflow/*
+**/.devcontainer/*

@@ -1,10 +1,10 @@
 producer_class	xtools.gsea.Gsea
-producer_timestamp	1759139796608
+producer_timestamp	1759150884415
 param	zip_report	false
 param	num	100
 param	scoring_scheme	weighted
 param	norm	meandiv
-param	out	/home/marcelullose/Documents/SoSe25/ComputationalWorkflows/computational-workflows-2025/notebooks/day_01/work/42/433110e0150fdccb32ac5babde35f3/.
+param	out	/home/marcelullose/Documents/SoSe25/ComputationalWorkflows/computational-workflows-2025/notebooks/day_01/work/16/f097db449eaa80550a6a83cff36b2a/.
 param	mode	Max_probe
 param	include_only_symbols	true
 param	set_max	500
@@ -15,7 +15,7 @@ param	order	descending
 param	rnd_seed	timestamp
 param	rpt_label	treatment_mCherry_hND6_sample_number.mh.all.v2022.1.Mm.symbols
 param	set_min	15
-param	res	/home/marcelullose/Documents/SoSe25/ComputationalWorkflows/computational-workflows-2025/notebooks/day_01/work/42/433110e0150fdccb32ac5babde35f3/treatment_mCherry_hND6_sample_number.mh.all.v2022.1.Mm.symbols.treatment_mCherry_hND6_.gct
+param	res	/home/marcelullose/Documents/SoSe25/ComputationalWorkflows/computational-workflows-2025/notebooks/day_01/work/16/f097db449eaa80550a6a83cff36b2a/treatment_mCherry_hND6_sample_number.mh.all.v2022.1.Mm.symbols.treatment_mCherry_hND6_.gct
 param	chip	treatment_mCherry_hND6_sample_number.mh.all.v2022.1.Mm.symbols.Mus_musculus.anno.feature_metadata.chip
 param	create_svgs	false
 param	cls	treatment_mCherry_hND6_sample_number.mh.all.v2022.1.Mm.symbols.treatment_mCherry_hND6_sample_number.cls#hND6_versus_mCherry
