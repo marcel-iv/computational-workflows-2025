@@ -122,3 +122,12 @@ snapshot_report.html
 **/work/*
 **/.nextflow/*
 **/.devcontainer/*
+
+# Sequencing data
+**/fastq/*
+**/rnaseq/*
+*.fastq.gz
+*.fastq
+*.fa
+*.fasta
+*.fn
