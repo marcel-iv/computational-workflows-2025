@@ -4,13 +4,132 @@ params.zip = 'zip'
 
 process SAYHELLO {
     debug true
+
+    """
+    echo Hello World!
+    """
 }
 
+process SAYHELLO_PYTHON {
+    debug true
+
+    """
+    #!/home/marcelullose/miniconda3/envs/nf-core/bin/python
+
+    print('Hello World!')
+
+    """
+}
+
+process SAYHELLO_PARAM {
+    debug true
+    
+    input:
+    val text
+
+    """
+    echo $text
+    """
+}
+
+process SAYHELLO_FILE {
+    debug true
+
+    input:
+    val text
+
+    """
+    echo $text > ./task_4_hello.txt
+    """
+}
+
+process UPPERCASE {
+    debug true
+
+    input:
+    val text
+
+    output: 
+    path 'upper_*'
+
+    """
+    echo $text | tr '[a-z]' '[A-Z]' > upper_hello_world.txt
+    echo find . -name upper_hello_world.txt
+    """
+}
+
+process PRINTUPPER {
+    debug true
+
+    input: 
+    path upper
+
+    """
+    cat $upper
+    """
+}
+
+process ZIP_FILE {
+    debug true
+
+    input:
+    path upper
+
+    script:
+    if ( params.zip == 'zip' )
+        """
+        zip ${upper}.zip $upper
+        find ~+ . -name ${upper}.zip
+        """
+    
+    else if ( params.zip == 'gzip' )
+        """
+        gzip -c -k $upper > ${upper}.gz
+        find ~+ . -name ${upper}.gz
+        """
+    
+    else if ( params.zip == 'bzip2' )
+        """
+        bzip2 -c -k $upper > ${upper}.bz2
+        find ~+ . -name ${upper}.bz2
+        """
+    else if ( params.zip == 'all' )
+        """
+        zip ${upper}.zip $upper
+        find ~+ . -name ${upper}.zip
+        gzip -c -k $upper > ${upper}.gz
+        find ~+ . -name ${upper}.gz
+        bzip2 -c -k $upper > ${upper}.bz2
+        find ~+ . -name ${upper}.bz2
+        """
+    
+    else 
+        error "Invalid zip mode ${params.zip}"
+    
+}
+
+process WRITETOFILE {
+    // better solution: pull this information from env instead of relying on hard coding
+    publishDir path:'/home/marcelullose/Documents/SoSe25/ComputationalWorkflows/computational-workflows-2025/notebooks/day_04/results', mode: 'move'
+    
+
+    // problem: writes a file in a separate process for each input, then copies the last file in the publishDir -> no concatenation
+    input:
+    tuple val(name), val(title)
+
+    output:
+    path 'names.tsv'
+
+    script:
+    """
+    echo $name\\t$title >> names.tsv
+    """
+}
 
 
 workflow {
 
-    // Task 1 - create a process that says Hello World! (add debug true to the process right after initializing to be sable to print the output to the console)
+    // Task 1 - create a process that says Hello World! (add debug true to the process right after initializing to be able to print the output to the console)
     if (params.step == 1) {
         SAYHELLO()
     }
@@ -51,12 +170,20 @@ workflow {
     //          Print out the path to the zipped file in the console
     if (params.step == 7) {
         greeting_ch = Channel.of("Hello world!")
+        out_ch = UPPERCASE(greeting_ch)
+        ZIP_FILE(out_ch)
+
+        // zip syntax:      zip archive.zip file.txt
+        // gzip syntax:     gzip -c -k file.txt > archive.gz
+        // bzip2 syntax:    bzip2 -c -k file.txt > archive.bz2
     }
 
     // Task 8 - Create a process that zips the file created in the UPPERCASE process in "zip", "gzip" AND "bzip2" format. Print out the paths to the zipped files in the console
-
+    // uses 'all' as input parameter
     if (params.step == 8) {
         greeting_ch = Channel.of("Hello world!")
+        out_ch = UPPERCASE(greeting_ch)
+        ZIP_FILE(out_ch)
     }
 
     // Task 9 - Create a process that reads in a list of names and titles from a channel and writes them to a file.
@@ -73,7 +200,7 @@ workflow {
             ['name': 'Dobby', 'title': 'hero'],
         )
 
-        in_ch
+        in_ch.collect()
             | WRITETOFILE
             // continue here
     }
