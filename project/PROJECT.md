@@ -1,10 +1,12 @@
 # Fill out your Project Information
 
-Student1: \<name-1>
+Student1: Marcel Schoch
 
-Student2: \<name-2>
+Student2: Raffael Rack
 
-Project Github url: \<github-url> 
+Student3: Katja Bochniak
+
+Project Github url: https://github.com/marcel-iv/simple-rnaseq
 
 
 # Next steps
@@ -18,5 +20,5 @@ Project Github url: \<github-url>
 
 # Deadline
 
-**Uplaod your final work (assignment notebooks, pipeline code and paper) before the 24th of October at 6pm**.
+**Upload your final work (assignment notebooks, pipeline code and paper) before the 24th of October at 6pm**.
 Later submissions (aka commit timestamps) cannot be graded!

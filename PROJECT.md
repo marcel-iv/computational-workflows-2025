@@ -6,7 +6,7 @@ Student2: Raffael Rack
 
 Student3: Katja Bochniak
 
-Project Github url: \<github-url> 
+Project Github url: https://github.com/marcel-iv/simple-rnaseq
 
 
 # Next steps
