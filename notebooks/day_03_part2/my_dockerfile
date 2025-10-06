@@ -6,7 +6,15 @@ LABEL image.author.name "yourname"
 LABEL image.author.email "yourmail"
 
 # !TODO: add the command that is run to install the dependencies for the image. In this case, it should be updating the package list and installing curl and cowsay.
-
+RUN apt-get update -y 
+RUN apt-get install -y --no-upgrade curl
+RUN apt-get install -y --no-upgrade fortune
+RUN apt-get install -y --no-upgrade cowsay
 
 
 # !TODO: add an ENV line to set environmental variables. In this case, it should set the PATH variable to /usr/games. Explain in the notebook why this is necessary.
+ENV PATH="$PATH:/usr/games/"
+
+# command to run once the container starts
+CMD fortune | cowsay -t
+
