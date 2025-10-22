@@ -34,7 +34,10 @@ workflow{
     // Task 4 - Group together all files with the same sample-id and strandedness value.
 
     if (params.step == 4) {
-        channel.fromPath('samplesheet.csv').splitCsv(header:true).groupTuple(by: [0,3]).view()
+        channel.fromPath('samplesheet.csv').splitCsv(header:true).collect()
+            .groupTuple(by: 3) // [0,3]
+            .view()
+            
     }
 
 

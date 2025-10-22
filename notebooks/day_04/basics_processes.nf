@@ -109,20 +109,17 @@ process ZIP_FILE {
 }
 
 process WRITETOFILE {
-    // better solution: pull this information from env instead of relying on hard coding
-    publishDir path:'/home/marcelullose/Documents/SoSe25/ComputationalWorkflows/computational-workflows-2025/notebooks/day_04/results', mode: 'move'
-    
-
-    // problem: writes a file in a separate process for each input, then copies the last file in the publishDir -> no concatenation
+    publishDir path:'results'
     input:
-    tuple val(name), val(title)
+    val list
 
     output:
-    path 'names.tsv'
+    path 'names.tsv', emit:names
 
     script:
+    def text = list.collect{ "${it.name}\t${it.title}" }.join("\n")
     """
-    echo $name\\t$title >> names.tsv
+    echo "${text}" > 'names.tsv'
     """
 }
 
@@ -200,9 +197,11 @@ workflow {
             ['name': 'Dobby', 'title': 'hero'],
         )
 
-        in_ch.collect()
-            | WRITETOFILE
+        //in_ch.collect()
+            //| WRITETOFILE
             // continue here
+
+        WRITETOFILE(in_ch.collect()).view() //collectFile("results/names.tsv")
     }
 
 }
